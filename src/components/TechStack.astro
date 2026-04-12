@@ -1,0 +1,87 @@
+---
+// Tech Stack — Bento Grid
+const stack = [
+  {
+    name: 'Python',
+    detail: 'Flask · FastAPI · Django',
+    span: 'md:col-span-2 md:row-span-2',
+    accent: true,
+  },
+  {
+    name: 'PostgreSQL',
+    detail: 'Primary datastore',
+    span: 'md:col-span-1',
+    accent: false,
+  },
+  {
+    name: 'RabbitMQ',
+    detail: 'Message brokering',
+    span: 'md:col-span-1',
+    accent: false,
+  },
+  {
+    name: 'Redis',
+    detail: 'Cache · Pub/Sub · Celery',
+    span: 'md:col-span-1',
+    accent: false,
+  },
+  {
+    name: 'Docker',
+    detail: 'Containers · Compose',
+    span: 'md:col-span-1',
+    accent: false,
+  },
+  {
+    name: 'SaltStack',
+    detail: 'Infrastructure automation',
+    span: 'md:col-span-2',
+    accent: false,
+  },
+];
+---
+
+<section class="py-24 md:py-32 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto">
+  <!-- Section header -->
+  <div class="mb-20">
+    <p class="font-mono text-xs tracking-[0.3em] uppercase text-[var(--text-faint)] mb-4">
+      Tools of the Trade
+    </p>
+    <h2 class="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-[var(--text-primary)] tracking-tight">
+      Tech Stack
+    </h2>
+  </div>
+
+  <!-- Bento Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    {stack.map((tech) => (
+      <div
+        class:list={[
+          'group border transition-all duration-500 p-8 flex flex-col justify-end',
+          tech.span,
+          tech.accent
+            ? 'bg-[var(--bg-inverse)] border-[var(--border-primary)]'
+            : 'bg-[var(--bg-surface)] border-[var(--border-primary)] hover:border-[var(--text-faint)]',
+        ]}
+      >
+        <p
+          class:list={[
+            'font-mono text-[10px] tracking-wider uppercase mb-3 transition-colors duration-500',
+            tech.accent ? 'text-[var(--text-muted)]' : 'text-[var(--text-faint)]',
+          ]}
+        >
+          {tech.detail}
+        </p>
+        <h3
+          class:list={[
+            'font-serif text-2xl font-medium transition-colors duration-500',
+            tech.accent
+              ? 'text-[var(--bg-primary)] md:text-4xl'
+              : 'text-[var(--text-primary)]',
+          ]}
+        >
+          {tech.name}
+        </h3>
+      </div>
+    ))}
+  </div>
+</section>

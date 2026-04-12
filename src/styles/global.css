@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Monochromatic Slate palette */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* Font families */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Semantic theme tokens ── */
+:root {
+  --bg-primary: var(--color-slate-50);
+  --bg-surface: #ffffff;
+  --bg-inverse: var(--color-slate-900);
+  --text-primary: var(--color-slate-800);
+  --text-secondary: var(--color-slate-600);
+  --text-muted: var(--color-slate-500);
+  --text-faint: var(--color-slate-400);
+  --text-ghost: var(--color-slate-300);
+  --border-primary: var(--color-slate-200);
+  --border-subtle: var(--color-slate-100);
+  --selection-bg: var(--color-slate-800);
+  --selection-fg: var(--color-slate-50);
+}
+
+.dark {
+  --bg-primary: var(--color-slate-950);
+  --bg-surface: var(--color-slate-900);
+  --bg-inverse: var(--color-slate-50);
+  --text-primary: var(--color-slate-100);
+  --text-secondary: var(--color-slate-300);
+  --text-muted: var(--color-slate-400);
+  --text-faint: var(--color-slate-500);
+  --text-ghost: var(--color-slate-600);
+  --border-primary: var(--color-slate-800);
+  --border-subtle: var(--color-slate-800);
+  --selection-bg: var(--color-slate-200);
+  --selection-fg: var(--color-slate-900);
+}
+
+/* ── Base styles ── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+/* ── Animations ── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out both;
+}
+
+.animate-delay-1 { animation-delay: 0.1s; }
+.animate-delay-2 { animation-delay: 0.2s; }
+.animate-delay-3 { animation-delay: 0.3s; }
+.animate-delay-4 { animation-delay: 0.4s; }
+.animate-delay-5 { animation-delay: 0.5s; }

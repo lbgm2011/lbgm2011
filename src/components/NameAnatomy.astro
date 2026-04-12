@@ -1,0 +1,103 @@
+---
+// Composition of a Name — Interactive heritage breakdown
+const names = [
+  {
+    full: 'Laoska',
+    parts: [
+      { fragment: 'La', origin: 'Alberto' },
+      { fragment: 'Os', origin: 'Socorro' },
+      { fragment: 'Ka', origin: 'Kairo' },
+    ],
+  },
+  {
+    full: 'Benyasca',
+    parts: [
+      { fragment: 'Ben', origin: 'Benicia' },
+      { fragment: 'Yas', origin: 'Yasmina' },
+      { fragment: 'Ca', origin: 'Cairo' },
+    ],
+  },
+];
+---
+
+<section class="py-24 md:py-32 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto border-t border-[var(--border-primary)] transition-colors duration-500">
+  <!-- Section header -->
+  <div class="mb-16">
+    <p class="font-mono text-xs tracking-[0.3em] uppercase text-[var(--text-faint)] mb-4">
+      Heritage
+    </p>
+    <h2 class="font-serif text-3xl md:text-4xl font-medium text-[var(--text-primary)] tracking-tight">
+      Composition of a Name
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8">
+    <!-- Name breakdown -->
+    <div class="md:col-span-7 space-y-14">
+      {names.map((name) => (
+        <div>
+          <!-- Full name label -->
+          <p class="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--text-faint)] mb-6">
+            {name.full}
+          </p>
+
+          <!-- 3-column grid -->
+          <div class="grid grid-cols-3 gap-4">
+            {name.parts.map((part) => (
+              <div class="name-cell group cursor-default text-center">
+                <!-- Syllable -->
+                <div class="font-mono text-3xl md:text-4xl lg:text-5xl font-medium text-[var(--text-primary)] group-hover:text-[var(--text-primary)] transition-colors duration-300 pb-3 border-b-2 border-[var(--border-primary)] group-hover:border-[var(--text-muted)] transition-all duration-300">
+                  {part.fragment}
+                </div>
+
+                <!-- Origin — hidden by default, revealed on hover/tap -->
+                <div class="origin-reveal mt-3 overflow-hidden">
+                  <p class="origin-text font-mono text-xs text-[var(--text-faint)] opacity-0 translate-y-2 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0">
+                    {part.origin}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Description -->
+    <div class="md:col-span-5 md:pl-8 flex flex-col justify-center">
+      <div class="w-8 h-px bg-[var(--border-primary)] mb-8"></div>
+      <p class="text-base leading-relaxed text-[var(--text-secondary)]">
+        A name built from components of heritage. Much like the systems I
+        architect, my identity is a composition of distinct influences,
+        structured with purpose.
+      </p>
+      <p class="font-mono text-[10px] text-[var(--text-ghost)] mt-6 tracking-wider">
+        Hover to reveal origins
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Tap-to-reveal for mobile (no hover)
+  document.querySelectorAll('.name-cell').forEach((cell) => {
+    cell.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('.name-cell').forEach((c) => c.classList.remove('is-active'));
+      cell.classList.add('is-active');
+    });
+  });
+
+  document.addEventListener('touchstart', (e) => {
+    if (!(e.target as HTMLElement).closest('.name-cell')) {
+      document.querySelectorAll('.name-cell').forEach((c) => c.classList.remove('is-active'));
+    }
+  });
+</script>
+
+<style>
+  .name-cell.is-active .origin-text {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
