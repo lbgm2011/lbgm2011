@@ -42,17 +42,17 @@ const names = [
           </p>
 
           <!-- 3-column grid -->
-          <div class="grid grid-cols-3 gap-4">
+          <div class="grid grid-cols-3 gap-2 sm:gap-4">
             {name.parts.map((part) => (
-              <div class="name-cell group cursor-default text-center">
+              <div class="name-cell group cursor-pointer text-center">
                 <!-- Syllable -->
-                <div class="font-mono text-3xl md:text-4xl lg:text-5xl font-medium text-[var(--text-primary)] group-hover:text-[var(--text-primary)] transition-colors duration-300 pb-3 border-b-2 border-[var(--border-primary)] group-hover:border-[var(--text-muted)] transition-all duration-300">
+                <div class="font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-[var(--text-primary)] transition-colors duration-300 pb-3 border-b-2 border-[var(--border-primary)] group-hover:border-[var(--text-muted)] transition-all duration-300">
                   {part.fragment}
                 </div>
 
-                <!-- Origin — hidden by default, revealed on hover/tap -->
-                <div class="origin-reveal mt-3 overflow-hidden">
-                  <p class="origin-text font-mono text-xs text-[var(--text-faint)] opacity-0 translate-y-2 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0">
+                <!-- Origin — revealed on hover (desktop) or tap (mobile) -->
+                <div class="mt-3 min-h-[1.5rem] sm:min-h-[2rem]">
+                  <p class="origin-text font-mono text-[11px] sm:text-xs text-[var(--text-faint)] opacity-0 translate-y-2 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0">
                     {part.origin}
                   </p>
                 </div>
@@ -72,23 +72,29 @@ const names = [
         structured with purpose.
       </p>
       <p class="font-mono text-[10px] text-[var(--text-ghost)] mt-6 tracking-wider">
-        Hover to reveal origins
+        <span class="hidden md:inline">Hover to reveal origins</span>
+        <span class="md:hidden">Tap to reveal origins</span>
       </p>
     </div>
   </div>
 </section>
 
 <script>
-  // Tap-to-reveal for mobile (no hover)
+  // Tap-to-reveal for mobile
   document.querySelectorAll('.name-cell').forEach((cell) => {
-    cell.addEventListener('touchstart', (e) => {
-      e.preventDefault();
+    cell.addEventListener('click', () => {
+      const wasActive = cell.classList.contains('is-active');
+      // Clear all
       document.querySelectorAll('.name-cell').forEach((c) => c.classList.remove('is-active'));
-      cell.classList.add('is-active');
+      // Toggle tapped cell
+      if (!wasActive) {
+        cell.classList.add('is-active');
+      }
     });
   });
 
-  document.addEventListener('touchstart', (e) => {
+  // Tap outside to dismiss
+  document.addEventListener('click', (e) => {
     if (!(e.target as HTMLElement).closest('.name-cell')) {
       document.querySelectorAll('.name-cell').forEach((c) => c.classList.remove('is-active'));
     }
@@ -96,8 +102,12 @@ const names = [
 </script>
 
 <style>
+  /* Tap-active state mirrors hover for mobile */
   .name-cell.is-active .origin-text {
     opacity: 1;
     transform: translateY(0);
+  }
+  .name-cell.is-active > div:first-child {
+    border-color: var(--text-muted);
   }
 </style>
