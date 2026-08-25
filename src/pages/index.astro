@@ -1,22 +1,57 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import Pillars from '../components/Pillars.astro';
-import Impact from '../components/Impact.astro';
-import Philosophy from '../components/Philosophy.astro';
-import TechStack from '../components/TechStack.astro';
-import NameAnatomy from '../components/NameAnatomy.astro';
-import Footer from '../components/Footer.astro';
+const title = 'Laoska Benyasca';
 ---
 
-<BaseLayout>
-  <main>
-    <Hero />
-    <Pillars />
-    <TechStack />
-    <Impact />
-    <Philosophy />
-    <NameAnatomy />
-  </main>
-  <Footer />
-</BaseLayout>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content="Laoska Benyasca — Backend & Systems Architect" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #0a0a0f;
+        color: #e2e8f0;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      h1 {
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: 300;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 2.5rem;
+      }
+      .links {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .links a {
+        color: #64748b;
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        transition: color 0.3s;
+      }
+      .links a:hover { color: #e2e8f0; }
+    </style>
+  </head>
+  <body>
+    <h1>Laoska Benyasca</h1>
+    <div class="links">
+      <a href="https://github.com/lbgm2011/" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/benyasca/" target="_blank">LinkedIn</a>
+      <a href="mailto:laoska@benyasca.com">Email</a>
+    </div>
+  </body>
+</html>
