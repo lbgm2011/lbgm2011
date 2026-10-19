@@ -1,22 +1,83 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import Pillars from '../components/Pillars.astro';
-import Impact from '../components/Impact.astro';
-import Philosophy from '../components/Philosophy.astro';
-import TechStack from '../components/TechStack.astro';
-import NameAnatomy from '../components/NameAnatomy.astro';
-import Footer from '../components/Footer.astro';
+import GalaxyCanvas from '../components/GalaxyCanvas';
 ---
 
 <BaseLayout>
-  <main>
-    <Hero />
-    <Pillars />
-    <TechStack />
-    <Impact />
-    <Philosophy />
-    <NameAnatomy />
+  <main class="relative w-full h-screen overflow-hidden bg-[#08080f]">
+    <!-- Galaxy canvas animation -->
+    <GalaxyCanvas client:load />
+
+    <!-- Centered content overlay -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-full pointer-events-none">
+      <div class="text-center pointer-events-auto">
+        <h1 class="galaxy-name text-white font-extrabold leading-[0.88] tracking-[-0.04em] text-6xl md:text-8xl">
+          Laoska<br />Benyasca
+        </h1>
+
+        <!-- Location pill -->
+        <div class="inline-flex items-center gap-1.5 mt-4 px-3.5 py-1.5 rounded-full bg-white/[0.06] backdrop-blur-md">
+          <span class="w-[5px] h-[5px] rounded-full bg-emerald-300 animate-pulse"></span>
+          <span class="text-white/60 text-[11px] font-medium tracking-wider">lisbon, portugal</span>
+        </div>
+
+        <!-- Contact icons -->
+        <div class="flex gap-2.5 mt-6 justify-center">
+          <a href="https://github.com/lbgm2011" target="_blank" rel="noopener" class="galaxy-icon" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/laoska-benyasca" target="_blank" rel="noopener" class="galaxy-icon" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a href="mailto:lbgm2011@gmail.com" class="galaxy-icon" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+              <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+          </a>
+          <a href="https://pypi.org/user/lbgm2011/" target="_blank" rel="noopener" class="galaxy-icon" aria-label="PyPI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </a>
+          <a href="https://medium.com/@lbgm2011" target="_blank" rel="noopener" class="galaxy-icon" aria-label="Medium">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+              <path d="M4 4h16v16H4z"/><path d="M8 8v8m4-10v12m4-10v8"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
   </main>
-  <Footer />
 </BaseLayout>
+
+<style>
+  .galaxy-name {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    text-shadow: 0 0 80px rgba(140, 120, 255, 0.25), 0 0 160px rgba(100, 80, 200, 0.1);
+  }
+
+  .galaxy-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.45);
+    transition: all 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
+  .galaxy-icon:hover {
+    transform: scale(1.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+</style>
