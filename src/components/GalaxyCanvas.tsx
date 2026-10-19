@@ -201,11 +201,13 @@ function createDust(W: number, H: number): DustCloud[] {
 }
 
 export default function GalaxyCanvas() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !container) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -216,10 +218,9 @@ export default function GalaxyCanvas() {
     let rafId: number;
 
     function resize() {
-      const rect = canvas!.parentElement!.getBoundingClientRect();
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = rect.width;
-      H = rect.height;
+      W = container!.clientWidth || window.innerWidth;
+      H = container!.clientHeight || window.innerHeight;
       canvas!.width = W * dpr;
       canvas!.height = H * dpr;
       canvas!.style.width = W + 'px';
@@ -325,5 +326,9 @@ export default function GalaxyCanvas() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+  return (
+    <div ref={containerRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+      <canvas ref={canvasRef} />
+    </div>
+  );
 }
