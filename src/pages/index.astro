@@ -67,7 +67,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       if (data.isHome) {
         el.textContent = data.base;
       } else {
-        el.innerHTML = `${data.current} <span style="opacity:0.5">·</span> 🏠 lisbon`;
+        el.innerHTML = `${data.current} <span style="opacity:0.3">/ lisbon</span>`;
       }
     } catch {
       // Fallback: keep the static "lisbon, portugal"
