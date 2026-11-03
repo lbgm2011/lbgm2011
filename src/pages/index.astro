@@ -20,9 +20,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </h1>
 
         <!-- Location pill -->
-        <div class="inline-flex items-center gap-1.5 mt-4 px-3.5 py-1.5 rounded-full bg-[#1a1a2e]/[0.05]">
+        <div id="location-pill" class="inline-flex items-center gap-1.5 mt-4 px-3.5 py-1.5 rounded-full bg-[#1a1a2e]/[0.05]">
           <span class="w-[5px] h-[5px] rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="text-[#1a1a2e]/45 text-[11px] font-medium tracking-wider">lisbon, portugal</span>
+          <span id="location-text" class="text-[#1a1a2e]/45 text-[11px] font-medium tracking-wider">lisbon, portugal</span>
         </div>
 
         <!-- Contact icons -->
@@ -52,6 +52,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </main>
 </BaseLayout>
+
+<script>
+  const WORKER_URL = 'https://location-api.beny-location.workers.dev';
+
+  async function updateLocation() {
+    try {
+      const res = await fetch(`${WORKER_URL}/location`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const el = document.getElementById('location-text');
+      if (!el) return;
+
+      if (data.isHome) {
+        el.textContent = data.base;
+      } else {
+        el.innerHTML = `${data.current} <span style="opacity:0.5">·</span> based in lisbon`;
+      }
+    } catch {
+      // Fallback: keep the static "lisbon, portugal"
+    }
+  }
+
+  updateLocation();
+</script>
 
 <style>
   .site-name {

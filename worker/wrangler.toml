@@ -1,0 +1,12 @@
+name = "location-api"
+main = "location-worker.js"
+compatibility_date = "2024-01-01"
+
+# Uncomment and fill in after creating the namespace:
+[[kv_namespaces]]
+binding = "LOCATION_KV"
+id = "e2ea36b40d5145b29f4f88b51c92b498"
+
+# Set these as secrets via:
+#   npx wrangler secret put TELEGRAM_BOT_TOKEN
+#   npx wrangler secret put ALLOWED_CHAT_ID
