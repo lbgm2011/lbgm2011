@@ -1,44 +1,48 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GalaxyCanvas from '../components/GalaxyCanvas';
 ---
 
 <BaseLayout>
-  <main class="relative w-full h-screen overflow-hidden bg-[#08080f]">
-    <!-- Galaxy canvas animation -->
-    <GalaxyCanvas client:load />
+  <main class="relative w-full h-screen overflow-hidden bg-[#f5f6fa]">
+    <!-- Watercolor skyline background -->
+    <img
+      src="/skyline.svg"
+      alt=""
+      class="skyline-bg"
+      aria-hidden="true"
+    />
 
-    <!-- Centered content overlay -->
-    <div class="relative z-10 flex flex-col items-center justify-center h-full pointer-events-none">
-      <div class="text-center pointer-events-auto">
-        <h1 class="galaxy-name text-white font-extrabold leading-[0.88] tracking-[-0.04em] text-6xl md:text-8xl">
+    <!-- Centered content -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-full">
+      <div class="text-center">
+        <h1 class="site-name text-[#1a1a2e] text-6xl md:text-8xl leading-[0.95]">
           Laoska<br />Benyasca
         </h1>
 
         <!-- Location pill -->
-        <div class="inline-flex items-center gap-1.5 mt-4 px-3.5 py-1.5 rounded-full bg-white/[0.06] backdrop-blur-md">
-          <span class="w-[5px] h-[5px] rounded-full bg-emerald-300 animate-pulse"></span>
-          <span class="text-white/60 text-[11px] font-medium tracking-wider">lisbon, portugal</span>
+        <div class="inline-flex items-center gap-1.5 mt-4 px-3.5 py-1.5 rounded-full bg-[#1a1a2e]/[0.05]">
+          <span class="w-[5px] h-[5px] rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-[#1a1a2e]/45 text-[11px] font-medium tracking-wider">lisbon, portugal</span>
         </div>
 
         <!-- Contact icons -->
         <div class="flex gap-2.5 mt-6 justify-center">
-          <a href="https://github.com/lbgm2011" target="_blank" rel="noopener" class="galaxy-icon" aria-label="GitHub">
+          <a href="https://github.com/lbgm2011" target="_blank" rel="noopener" class="contact-icon" aria-label="GitHub">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
             </svg>
           </a>
-          <a href="https://linkedin.com/in/benyasca" target="_blank" rel="noopener" class="galaxy-icon" aria-label="LinkedIn">
+          <a href="https://linkedin.com/in/benyasca" target="_blank" rel="noopener" class="contact-icon" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
               <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
             </svg>
           </a>
-          <a href="mailto:hello@benyasca.com" class="galaxy-icon" aria-label="Email">
+          <a href="mailto:hello@benyasca.com" class="contact-icon" aria-label="Email">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
               <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
             </svg>
           </a>
-          <a href="https://medium.com/@benyasca" target="_blank" rel="noopener" class="galaxy-icon" aria-label="Medium">
+          <a href="https://medium.com/@benyasca" target="_blank" rel="noopener" class="contact-icon" aria-label="Medium">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
               <path d="M4 4h16v16H4z"/><path d="M8 8v8m4-10v12m4-10v8"/>
             </svg>
@@ -50,29 +54,46 @@ import GalaxyCanvas from '../components/GalaxyCanvas';
 </BaseLayout>
 
 <style>
-  .galaxy-name {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    text-shadow: 0 0 80px rgba(140, 120, 255, 0.25), 0 0 160px rgba(100, 80, 200, 0.1);
+  .site-name {
+    font-family: 'Sirivennela', serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 
-  .galaxy-icon {
+  .skyline-bg {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110%;
+    max-width: none;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .contact-icon {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1.5px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(26, 26, 46, 0.1);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(26, 26, 46, 0.35);
     transition: all 0.3s;
-    backdrop-filter: blur(4px);
   }
 
-  .galaxy-icon:hover {
+  .contact-icon:hover {
     transform: scale(1.15);
-    border-color: rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
+    border-color: rgba(26, 26, 46, 0.3);
+    background: rgba(26, 26, 46, 0.04);
+    color: #1a1a2e;
+  }
+
+  @media (max-width: 640px) {
+    .skyline-bg {
+      width: 200%;
+    }
   }
 </style>

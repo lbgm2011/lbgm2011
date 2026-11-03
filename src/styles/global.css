@@ -17,9 +17,9 @@
   --color-slate-950: #020617;
 
   /* Font families */
-  --font-serif: 'Space Grotesk', Georgia, serif;
-  --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
-  --font-sans: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Sirivennela', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Sirivennela', system-ui, -apple-system, sans-serif;
 }
 
 /* ── Semantic theme tokens ── */
