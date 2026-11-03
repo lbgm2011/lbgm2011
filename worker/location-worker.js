@@ -7,27 +7,27 @@
  * Telegram commands:
  *   /location Berlin, Germany   → sets current location (away)
  *   /home                       → resets to base location
+ *   /where                      → check current setting
+ *   [share location attachment] → auto-detects city via reverse geocoding
  *
  * HTTP API:
  *   GET  /location              → returns { current, base, isHome }
  *   POST /webhook/<bot-token>   → Telegram webhook endpoint
  */
 
-const BASE_LOCATION = 'lisbon, portugal';
+const BASE_LOCATION = 'lisbon';
 const KV_KEY = 'current_location';
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // CORS headers for your static site
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     };
 
-    // Handle CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: corsHeaders });
     }
@@ -53,11 +53,42 @@ export default {
   },
 };
 
+async function reverseGeocode(lat, lng) {
+  const res = await fetch(
+    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=10&accept-language=en`,
+    { headers: { 'User-Agent': 'benyasca-location-bot/1.0' } }
+  );
+  if (!res.ok) return null;
+  const data = await res.json();
+  const addr = data.address || {};
+  const city = addr.city || addr.town || addr.village || addr.municipality || addr.county || '';
+  if (!city) return null;
+  return city.toLowerCase();
+}
+
+function isHomeLocation(location) {
+  return location === BASE_LOCATION
+    || location === 'lisbon'
+    || location === 'lisboa'
+    || location === 'home';
+}
+
+async function setLocation(env, location) {
+  const isHome = isHomeLocation(location);
+  const current = isHome ? BASE_LOCATION : location;
+  await env.LOCATION_KV.put(KV_KEY, JSON.stringify({
+    current,
+    isHome,
+    updatedAt: new Date().toISOString(),
+  }));
+  return isHome
+    ? `📍 Back home — ${BASE_LOCATION}`
+    : `📍 Updated — ${current} / lisbon`;
+}
+
 async function handleTelegramUpdate(update, env) {
   const message = update.message;
-  if (!message || !message.text) {
-    return new Response('OK');
-  }
+  if (!message) return new Response('OK');
 
   // Only allow your own chat ID
   const chatId = message.chat.id.toString();
@@ -65,43 +96,44 @@ async function handleTelegramUpdate(update, env) {
     return new Response('OK');
   }
 
-  const text = message.text.trim();
   let reply = '';
 
-  if (text.startsWith('/location ')) {
-    const location = text.replace('/location ', '').trim().toLowerCase();
-    const isHome = location === BASE_LOCATION || location === 'lisbon' || location === 'home';
+  // Handle shared location (📎 → Location → Send)
+  if (message.location) {
+    const { latitude, longitude } = message.location;
+    const location = await reverseGeocode(latitude, longitude);
+    if (location) {
+      reply = await setLocation(env, location);
+    } else {
+      reply = `📍 Couldn't detect city for ${latitude}, ${longitude}. Try /location <city> instead.`;
+    }
 
-    await env.LOCATION_KV.put(KV_KEY, JSON.stringify({
-      current: isHome ? BASE_LOCATION : location,
-      isHome,
-      updatedAt: new Date().toISOString(),
-    }));
+  // Handle text commands
+  } else if (message.text) {
+    const text = message.text.trim();
 
-    reply = isHome
-      ? `📍 Back home — ${BASE_LOCATION}`
-      : `📍 Updated — ${location} · based in lisbon`;
+    if (text.startsWith('/location ')) {
+      const location = text.replace('/location ', '').trim().toLowerCase();
+      reply = await setLocation(env, location);
 
-  } else if (text === '/home') {
-    await env.LOCATION_KV.put(KV_KEY, JSON.stringify({
-      current: BASE_LOCATION,
-      isHome: true,
-      updatedAt: new Date().toISOString(),
-    }));
-    reply = `📍 Back home — ${BASE_LOCATION}`;
+    } else if (text === '/home') {
+      reply = await setLocation(env, 'home');
 
-  } else if (text === '/where') {
-    const stored = await env.LOCATION_KV.get(KV_KEY, 'json');
-    const data = stored || { current: BASE_LOCATION, isHome: true };
-    reply = data.isHome
-      ? `📍 ${BASE_LOCATION}`
-      : `📍 ${data.current} · based in lisbon`;
+    } else if (text === '/where') {
+      const stored = await env.LOCATION_KV.get(KV_KEY, 'json');
+      const data = stored || { current: BASE_LOCATION, isHome: true };
+      reply = data.isHome
+        ? `📍 ${BASE_LOCATION}`
+        : `📍 ${data.current} / lisbon`;
 
+    } else {
+      return new Response('OK');
+    }
   } else {
-    return new Response('OK'); // Ignore other messages
+    return new Response('OK');
   }
 
-  // Send reply back to Telegram
+  // Send reply
   await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
