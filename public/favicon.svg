@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#f5f6fa"/>
-  <text x="50%" y="54%" dominant-baseline="central" text-anchor="middle"
-        font-family="Georgia, serif" font-weight="400" font-size="18" fill="#1a1a2e" opacity="0.7">
-    LB
-  </text>
+  <path d="M4 20 Q8 14, 12 18 Q16 22, 20 16 Q24 10, 28 15"
+        stroke="#1a1a2e" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M4 23 Q10 19, 16 22 Q22 25, 28 20"
+        stroke="#1a1a2e" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.25"/>
 </svg>
