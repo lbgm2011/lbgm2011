@@ -3,54 +3,39 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Monochromatic Slate palette */
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
-  --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
-  --color-slate-400: #94a3b8;
-  --color-slate-500: #64748b;
-  --color-slate-600: #475569;
-  --color-slate-700: #334155;
-  --color-slate-800: #1e293b;
-  --color-slate-900: #0f172a;
-  --color-slate-950: #020617;
+  /* Violet / Lavender palette */
+  --color-violet-50: #f3eefa;
+  --color-violet-100: #e8ddf5;
+  --color-violet-200: #d4bfeb;
+  --color-violet-300: #b898d9;
+  --color-violet-400: #9a6fc4;
+  --color-violet-500: #7c4aad;
+  --color-violet-600: #5a328c;
+  --color-violet-700: #42246a;
+  --color-violet-800: #2a1845;
+  --color-violet-900: #1a0f2e;
+  --color-violet-950: #0d0718;
 
   /* Font families */
-  --font-serif: 'Sirivennela', Georgia, serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'Sirivennela', system-ui, -apple-system, sans-serif;
+  --font-sans: system-ui, -apple-system, sans-serif;
 }
 
 /* ── Semantic theme tokens ── */
 :root {
-  --bg-primary: var(--color-slate-50);
+  --bg-primary: var(--color-violet-50);
   --bg-surface: #ffffff;
-  --bg-inverse: var(--color-slate-900);
-  --text-primary: var(--color-slate-800);
-  --text-secondary: var(--color-slate-600);
-  --text-muted: var(--color-slate-500);
-  --text-faint: var(--color-slate-400);
-  --text-ghost: var(--color-slate-300);
-  --border-primary: var(--color-slate-200);
-  --border-subtle: var(--color-slate-100);
-  --selection-bg: var(--color-slate-800);
-  --selection-fg: var(--color-slate-50);
-}
-
-.dark {
-  --bg-primary: var(--color-slate-950);
-  --bg-surface: var(--color-slate-900);
-  --bg-inverse: var(--color-slate-50);
-  --text-primary: var(--color-slate-100);
-  --text-secondary: var(--color-slate-300);
-  --text-muted: var(--color-slate-400);
-  --text-faint: var(--color-slate-500);
-  --text-ghost: var(--color-slate-600);
-  --border-primary: var(--color-slate-800);
-  --border-subtle: var(--color-slate-800);
-  --selection-bg: var(--color-slate-200);
-  --selection-fg: var(--color-slate-900);
+  --bg-inverse: var(--color-violet-800);
+  --text-primary: var(--color-violet-800);
+  --text-secondary: var(--color-violet-600);
+  --text-muted: var(--color-violet-500);
+  --text-faint: var(--color-violet-400);
+  --text-ghost: var(--color-violet-300);
+  --border-primary: var(--color-violet-200);
+  --border-subtle: var(--color-violet-100);
+  --selection-bg: var(--color-violet-800);
+  --selection-fg: var(--color-violet-50);
 }
 
 /* ── Base styles ── */
